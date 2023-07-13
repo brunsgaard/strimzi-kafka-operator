@@ -86,6 +86,25 @@ public class KafkaUserModel {
     private final String secretPrefix;
 
     /**
+     * getPrincipalSuffix
+     *
+     * @return the principal suffix
+     */
+    public String getPrincipalSuffix() {
+        return principalSuffix == null ? "" : principalSuffix;
+    }
+    /**
+     * setPrincipalSuffix
+     *
+     * @param principalSuffix sets the principal suffix
+     */
+    public void setPrincipalSuffix(String principalSuffix) {
+        this.principalSuffix = principalSuffix;
+    }
+
+    private String principalSuffix;
+
+    /**
      * Constructor
      *
      * @param namespace Kubernetes namespace where Kafka Connect cluster resources are going to be created
@@ -126,6 +145,8 @@ public class KafkaUserModel {
                 throw new InvalidResourceException("SCRAM-SHA-512 authentication is currently not supported in KRaft based Kafka clusters.");
             }
         }
+
+        result.setPrincipalSuffix(kafkaUser.getMetadata().getAnnotations().get("principalSuffix"));
 
         validateTlsUsername(kafkaUser);
         validateDesiredPassword(kafkaUser);

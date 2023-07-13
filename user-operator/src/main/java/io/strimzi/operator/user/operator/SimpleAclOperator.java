@@ -317,6 +317,7 @@ public class SimpleAclOperator implements AdminApiOperator<Set<SimpleAclRule>, S
 
         while (keys.hasMoreElements())  {
             String username = KafkaUserModel.decodeUsername(keys.nextElement());
+            username = username.split("@")[0];
 
             if (IGNORED_USERS.contains(username)) {
                 if (!ignored.contains(username)) {
